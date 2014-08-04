@@ -1,9 +1,8 @@
 # Timezone project
 
-### by [Haralan Dobrev][hkdobrev.com] for [Toptal][] screening process.
+Created from [Haralan Dobrev][hkdobrev.com] for [Toptal][] screening process.
 
-
-Project task:
+## Project task
 
 Write an application that shows time in different timezones.
 
