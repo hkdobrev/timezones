@@ -1,0 +1,26 @@
+{
+    "name": "hkdobrev/timezones",
+    "description": "Toptal timezones project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Haralan Dobrev",
+            "email": "hkdobrev@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "silex/silex": "~1.2",
+        "symfony/twig-bridge": "~2.5",
+        "twig/twig": "~1.15.1",
+        "monolog/monolog": "~1.9.1",
+        "symfony/monolog-bridge": "~2.5",
+        "silex/web-profiler": "~1.0.3",
+        "harp-orm/harp": "~0.3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Timezones\\": "src/"
+        }
+    }
+}
