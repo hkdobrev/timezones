@@ -26,7 +26,7 @@ sudo debconf-set-selections <<< 'mysql-server-5.1 mysql-server/root_password_aga
 sudo apt-get -q -y install \
  git-core htop vim apache2 mysql-server mysql-client \
  php5 php5-imagick php5-gd php5-memcache php5-curl php5-intl \
- php5-mysqlnd php5-xdebug php5-mcrypt
+ php5-mysqlnd php5-sqlite php5-xdebug php5-mcrypt
 
 # Enable project virtual host
 eval "sudo a2ensite ${PROJECT_NAME}.conf"
