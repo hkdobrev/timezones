@@ -1,0 +1,11 @@
+<?php
+
+$app['oauth'] = array(
+    'client_id' => 'timezonesapp',
+    'client_secret' => 'mF17G2hy',
+    'token_route' => 'grant',
+    'resource_route' => 'access',
+    'http_options' => array(
+        'exceptions' => false,
+    ),
+);

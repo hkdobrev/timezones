@@ -1,22 +1,27 @@
 <?php
 
 use Silex\Provider\MonologServiceProvider;
+use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
 
 // include the default configuration
 require __DIR__.'/default.php';
 
-error_reporting(E_ALL ^ E_STRICT);
+error_reporting(E_ALL | E_STRICT);
 ini_set('display_errors', 1);
+ini_set('log_errors', 1);
 
 // enable the debug mode
 $app['debug'] = true;
 
+$app->register(new TwigServiceProvider());
+
+$app['twig.path'] = [__DIR__.'/../templates'];
 $app['twig.options'] = ['debug' => true, 'cache' => false];
 
 $app->register(new MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__.'/../var/log/silex_dev.log',
-    'monolog.name' => 'timezones'
+    'monolog.name' => 'timezones',
 ));
 
 $app->register(new WebProfilerServiceProvider(), array(

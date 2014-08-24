@@ -22,4 +22,6 @@ ExceptionHandler::register($app['debug']);
 require __DIR__.'/../src/controllers.php';
 
 // Run the app
-$app->run();
+// create an http foundation request implementing OAuth2\RequestInterface
+$request = OAuth2\HttpFoundationBridge\Request::createFromGlobals();
+$app->run($request);

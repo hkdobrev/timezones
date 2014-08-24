@@ -1,3 +1,4 @@
 <?php
 
-$app['twig.path'] = [__DIR__.'/../templates'];
+require 'oauth.php';
+require 'passwords.php';
