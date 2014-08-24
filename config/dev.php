@@ -16,7 +16,6 @@ $app['debug'] = true;
 
 $app->register(new TwigServiceProvider());
 
-$app['twig.path'] = [__DIR__.'/../templates'];
 $app['twig.options'] = ['debug' => true, 'cache' => false];
 
 $app->register(new MonologServiceProvider(), array(

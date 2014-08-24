@@ -11,8 +11,6 @@ class HomepageController
         $timezone = new Timezone();
         $timezone->name = 'Awesome timezone';
 
-        return $app->render('homepage.html.twig', array(
-            'timezone' => $timezone,
-        ));
+        return sprintf('Hello, %s!', $timezone->name);
     }
 }
