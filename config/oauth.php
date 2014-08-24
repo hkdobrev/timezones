@@ -4,7 +4,7 @@ $app['oauth'] = array(
     'client_id' => 'timezonesapp',
     'client_secret' => 'mF17G2hy',
     'token_route' => 'grant',
-    'resource_route' => 'access',
+    'timezones_route' => 'timezones',
     'http_options' => array(
         'exceptions' => false,
     ),

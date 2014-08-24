@@ -9,13 +9,14 @@ class RequestResourceController
 {
     static public function addRoutes($routing)
     {
-        $routing->get('/client/request_resource', array(new self(), 'requestResource'))->bind('request_resource');
+        $routing
+            ->get('/timezones', array(new self(), 'requestTimezones'))
+            ->bind('request_timezones');
     }
 
-    public function requestResource(Application $app)
+    public function requestTimezones(Application $app)
     {
         $config = $app['oauth'];    // the configuration for the current oauth implementation
-        $urlgen = $app['url_generator']; // generates URLs based on our routing
         $http   = $app['http_client'];   // service to make HTTP requests to the oauth server
 
         // pull the token from the request
@@ -25,8 +26,10 @@ class RequestResourceController
         $config['resource_params']['access_token'] = $token;
 
         // determine the resource endpoint to call based on our config (do this somewhere else?)
-        $apiRoute = $config['resource_route'];
-        $endpoint = 0 === strpos($apiRoute, 'http') ? $apiRoute : $urlgen->generate($apiRoute, $config['resource_params'], true);
+        $apiRoute = $config['timezones_route'];
+        $endpoint = 0 === strpos($apiRoute, 'http')
+            ? $apiRoute
+            : $app->url($apiRoute, $config['resource_params']);
 
         // make the resource request and decode the json response
         $internalResponse = $http->get($endpoint, array_merge([
