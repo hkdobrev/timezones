@@ -3,6 +3,7 @@
 use Silex\Provider\MonologServiceProvider;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\WebProfilerServiceProvider;
+use Harp\Query\DB;
 
 // include the default configuration
 require __DIR__.'/default.php';
@@ -26,3 +27,9 @@ $app->register(new MonologServiceProvider(), array(
 $app->register(new WebProfilerServiceProvider(), array(
     'profiler.cache_dir' => __DIR__.'/../var/cache/profiler',
 ));
+
+DB::setConfig([
+    'dsn' => 'mysql:dbname=timezones;host=127.0.0.1',
+    'username' => 'root',
+    'password' => '',
+]);

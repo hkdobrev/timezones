@@ -8,8 +8,7 @@ class HomepageController
 {
     public function show(\Silex\Application $app)
     {
-        $timezone = new Timezone();
-        $timezone->name = 'Awesome timezone';
+        $timezone = Timezone::find(1);
 
         return sprintf('Hello, %s!', $timezone->name);
     }
