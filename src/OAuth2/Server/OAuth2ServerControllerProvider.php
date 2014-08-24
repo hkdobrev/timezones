@@ -19,12 +19,7 @@ class OAuth2ServerControllerProvider implements ControllerProviderInterface
     public function setup(Application $app)
     {
         // create PDO-based sqlite storage
-        $storage = new Pdo(array(
-            'dsn' => 'mysql:host=localhost;dbname=timezones',
-            'username' => 'root',
-            'password' => '',
-        ));
-
+        $storage = new Pdo($app['db']);
 
         // create array of supported grant types
         $grantTypes = array(
