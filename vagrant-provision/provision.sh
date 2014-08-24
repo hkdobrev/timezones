@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 if [ $# -eq 0 ]; then
-	echo "usage: provision.sh <project-name>"
-	exit 1
+    echo "usage: provision.sh <project-name>"
+    exit 1
 fi
 
 PROJECT_NAME=$1
@@ -24,9 +24,9 @@ sudo debconf-set-selections <<< 'mysql-server-5.1 mysql-server/root_password_aga
 
 # Install Git, Apache, MySQL, PHP, htop and Vim
 sudo apt-get -q -y install \
- git-core htop vim apache2 mysql-server mysql-client \
- php5 php5-imagick php5-gd php5-memcache php5-curl php5-intl \
- php5-mysqlnd php5-sqlite php5-xdebug php5-mcrypt
+	git-core htop vim apache2 mysql-server mysql-client \
+	php5 php5-imagick php5-gd php5-memcache php5-curl php5-intl \
+	php5-mysqlnd php5-sqlite php5-xdebug php5-mcrypt
 
 # Enable project virtual host
 eval "sudo a2ensite ${PROJECT_NAME}.conf"
@@ -35,9 +35,14 @@ sudo service apache2 reload
 # Remove password for MySQL root user
 mysqladmin --user=root --password=root password ''
 
-# Create MySQL databases and users
-eval "mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS ${PROJECT_NAME}'"
-eval "mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS ${PROJECT_NAME}_test'"
+# Create MySQL databases
+eval "mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS ${PROJECT_NAME}
+    DEFAULT CHARACTER SET utf8
+    DEFAULT COLLATE utf8_general_ci';"
+
+eval "mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS ${PROJECT_NAME}_test
+    DEFAULT CHARACTER SET utf8
+    DEFAULT COLLATE utf8_general_ci';"
 
 # Set environment variables
 source /etc/environment
