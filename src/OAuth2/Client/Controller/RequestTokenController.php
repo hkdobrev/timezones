@@ -25,6 +25,7 @@ class RequestTokenController
 
         $username = $app['request']->get('username');
         $password = $app['request']->get('password');
+        $scope = $app['request']->get('scope');
 
         // exchange user credentials for access token
         $query = array(
@@ -33,6 +34,7 @@ class RequestTokenController
             'client_secret' => $config['client_secret'],
             'username'      => $username,
             'password'      => $password,
+            'scope'         => $scope,
         );
 
         // determine the token endpoint to call based on our config (do this somewhere else?)
