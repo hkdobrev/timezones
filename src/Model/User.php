@@ -14,7 +14,7 @@ class User extends Harp\AbstractModel
             ->setTable('oauth_users')
             ->setNameKey('username')
             ->addRel(new Harp\Rel\HasMany('timezones', $config, Timezone::getRepo(), array(
-                'foreignKey' => 'user_id',
+                'foreignKey' => 'userId',
             )))
 
             // Hash passwords before inserting into the database
