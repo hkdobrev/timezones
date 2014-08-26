@@ -12,7 +12,7 @@ class Pdo extends \OAuth2\Storage\Pdo
     public function setUser($username, $password, $firstName = null, $lastName = null)
     {
         // do not store in plaintext
-        $password = password_hash($password, $app['passwords.algorithm'], $app['passwords.options']);
+        $password = password_hash($password, PASSWORD_DEFAULT);
 
         // if it exists, update it.
         if ($this->getUser($username)) {
