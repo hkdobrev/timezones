@@ -9,6 +9,8 @@ use Timezones\Model\Timezone;
 
 class TimezonesController
 {
+    use AuthTrait;
+
     const SCOPE = 'timezones';
 
     static public function addRoutes($routing)
@@ -18,16 +20,13 @@ class TimezonesController
 
     public function getTimezones(Application $app)
     {
-        $request = $app['request'];
         $response = new Response();
-        $oauthServer = $app['oauth_server'];
 
-        if (!$oauthServer->verifyResourceRequest($request, $response, static::SCOPE)) {
+        if (!$this->verifyResourceRequest($app, $response)) {
             return $response;
         }
 
-        $token = $oauthServer->getAccessTokenData($request);
-        $user = User::find($token['user_id']);
+        $user = $this->getCurrentUser($app);
 
         $response
             ->setData([
