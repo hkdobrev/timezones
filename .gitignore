@@ -8,3 +8,7 @@ vendor/
 
 # Vagrant system dir
 /.vagrant/
+
+# Modules/Components installed via npm and Bower
+/node_modules/
+/public/bower_components/
