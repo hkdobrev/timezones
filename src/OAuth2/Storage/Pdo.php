@@ -22,4 +22,20 @@ class Pdo extends \OAuth2\Storage\Pdo
         }
         return $stmt->execute(compact('username', 'password', 'firstName', 'lastName'));
     }
+
+    public function getUser($username)
+    {
+        $stmt = $this->db->prepare($sql = sprintf('SELECT * from %s where username=:username', $this->config['user_table']));
+        $stmt->execute(array('username' => $username));
+
+        if (!$userInfo = $stmt->fetch()) {
+            return false;
+        }
+
+        // the default behavior is to use "username" as the user_id
+        return array_merge(array(
+            'user_id' => $userInfo['id'],
+        ), $userInfo);
+    }
+
 }
