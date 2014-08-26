@@ -15,4 +15,5 @@ config(['$locationProvider', function($locationProvider) {
 }]).
 config(['$authProvider', function($authProvider) {
   $authProvider.tokenName = 'access_token';
+  $authProvider.signupRedirect = '/';
 }]);
