@@ -10,7 +10,10 @@ class User extends Harp\AbstractModel
     {
         $config
             ->setTable('oauth_users')
-            ->addRel(new Harp\Rel\HasMany('timezones', $config, Timezone::getRepo()));
+            ->setNameKey('username')
+            ->addRel(new Harp\Rel\HasMany('timezones', $config, Timezone::getRepo(), array(
+                'foreignKey' => 'user_id',
+            )));
     }
 
     /**

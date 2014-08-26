@@ -10,7 +10,9 @@ class Timezone extends Harp\AbstractModel
     {
         $config
             ->setTable('timezone')
-            ->addRel(new Harp\Rel\BelongsTo('user', $config, User::getRepo()));
+            ->addRel(new Harp\Rel\BelongsTo('user', $config, User::getRepo(), array(
+                'foreignKey' => 'user_id',
+            )));
     }
 
     /**
@@ -24,9 +26,9 @@ class Timezone extends Harp\AbstractModel
     public $name;
 
     /**
-     * @var Timezones\Model\User
+     * @var integer
      */
-    public $user;
+    public $user_id;
 
     /**
      * @var string
