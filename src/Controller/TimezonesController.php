@@ -34,7 +34,7 @@ class TimezonesController
         // make the resource request and decode the json response
         $internalResponse = $http->get($endpoint, array_merge([
             'query' => [
-                'access_token' => $token,
+                'token' => $token,
             ],
         ], $config['http_options']));
 

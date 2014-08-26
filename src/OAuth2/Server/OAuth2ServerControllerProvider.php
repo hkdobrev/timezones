@@ -26,6 +26,7 @@ class OAuth2ServerControllerProvider implements ControllerProviderInterface
         ]));
         $server->setConfig('enforce_state', true);
         $server->setConfig('allow_implicit', true);
+        $server->setConfig('use_crypto_tokens', true);
 
         // create PDO-based storage
         $storage = new Pdo($app['db']);
@@ -37,8 +38,8 @@ class OAuth2ServerControllerProvider implements ControllerProviderInterface
         ]));
 
         // public key strings can be passed in however you like
-        $publicKey  = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/../keys/jwt.pub');
-        $privateKey = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/../keys/jwt');
+        $publicKey  = file_get_contents($app['oauth']['keys']['public']);
+        $privateKey  = file_get_contents($app['oauth']['keys']['private']);
 
         // create key storage
         $keyStorage = new OAuth2\Storage\Memory([

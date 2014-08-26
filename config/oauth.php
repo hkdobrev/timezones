@@ -8,4 +8,8 @@ $app['oauth'] = array(
     'http_options' => array(
         'exceptions' => false,
     ),
+    'keys' => [
+        'public' => __DIR__.'/../keys/public.pem',
+        'private' => __DIR__.'/../keys/private.pem',
+    ],
 );
