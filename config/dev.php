@@ -14,6 +14,7 @@ ini_set('log_errors', 1);
 // enable the debug mode
 $app['debug'] = true;
 
+// Twig is used only from the Debug component for exception views
 $app->register(new TwigServiceProvider());
 
 $app['twig.options'] = ['debug' => true, 'cache' => false];
