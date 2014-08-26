@@ -13,7 +13,15 @@ class User extends Harp\AbstractModel
             ->setNameKey('username')
             ->addRel(new Harp\Rel\HasMany('timezones', $config, Timezone::getRepo(), array(
                 'foreignKey' => 'user_id',
-            )));
+            )))
+
+            // Hash passwords before inserting into the database
+            ->addEventBefore(Harp\Repo\Event::INSERT, function($user) {
+                $user->password = password_hash(
+                    $user->password,
+                    PASSWORD_DEFAULT
+                );
+            });
     }
 
     /**
