@@ -32,7 +32,7 @@ class TimezonesController
             ->setData([
                 'data' => [
                     'timezones' => array_map(function(Timezone $timezone) {
-                        return $timezone->name;
+                        return $timezone->jsonSerialize();
                     }, $user->all('timezones')->toArray()),
                 ],
             ]);

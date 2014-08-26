@@ -3,8 +3,9 @@
 namespace Timezones\Model;
 
 use Harp\Harp;
+use JsonSerializable;
 
-class Timezone extends Harp\AbstractModel
+class Timezone extends Harp\AbstractModel implements JsonSerializable
 {
     public static function initialize($config)
     {
@@ -39,4 +40,15 @@ class Timezone extends Harp\AbstractModel
      * @var integer
      */
     public $utcOffset;
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'user' => $this->userId,
+            'city' => $this->city,
+            'utcOffset' => $this->utcOffset,
+        ];
+    }
 }
