@@ -1,6 +1,6 @@
 <p>This is the partial for login.</p>
-<form ng-submit="submit()">
+<form ng-controller="LoginCtrl" ng-submit="submit()">
 	<input type="text" ng-model="username" name="username">
 	<input type="password" ng-model="password" name="password">
-	<button type="submit">Login</button>
+	<button type="submit">Log in</button>
 </form>

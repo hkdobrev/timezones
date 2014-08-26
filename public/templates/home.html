@@ -1,0 +1,6 @@
+<div ng-if="isAuthenticated">
+	<div ng-include="'templates/timezones.html'"></div>
+</div>
+<div ng-if="!isAuthenticated">
+	<div ng-include="'templates/login.html'"></div>
+</div>

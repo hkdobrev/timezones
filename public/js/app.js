@@ -10,9 +10,8 @@ angular.module('timezones', [
   'timezones.controllers',
   'Satellizer'
 ]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/', {templateUrl: 'templates/login.html', controller: 'LoginCtrl'});
-  $routeProvider.otherwise({redirectTo: '/'});
+config(['$locationProvider', function($locationProvider) {
+  $locationProvider.html5Mode(true);
 }]).
 config(['$authProvider', function($authProvider) {
   $authProvider.tokenName = 'access_token';
