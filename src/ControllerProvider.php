@@ -28,6 +28,7 @@ class ControllerProvider implements ControllerProviderInterface
         $routing = $app['controllers_factory'];
 
         Controller\TimezonesController::addRoutes($routing);
+        Controller\SignupController::addRoutes($routing);
 
         return $routing;
     }
