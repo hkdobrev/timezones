@@ -84,7 +84,6 @@ class OAuth2ServerControllerProvider implements ControllerProviderInterface
 
         /* Set corresponding endpoints on the controller classes */
         Controller\TokenController::addRoutes($routing);
-        Controller\ResourceController::addRoutes($routing);
 
         return $routing;
     }

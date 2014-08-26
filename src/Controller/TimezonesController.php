@@ -4,9 +4,13 @@ namespace Timezones\Controller;
 
 use Silex\Application;
 use OAuth2\HttpFoundationBridge\Response;
+use Timezones\Model\User;
+use Timezones\Model\Timezone;
 
 class TimezonesController
 {
+    const SCOPE = 'timezones';
+
     static public function addRoutes($routing)
     {
         $routing
@@ -16,30 +20,26 @@ class TimezonesController
 
     public function getTimezones(Application $app)
     {
-        $config = $app['oauth'];    // the configuration for the current oauth implementation
-        $http   = $app['http_client'];   // service to make HTTP requests to the oauth server
+        $request = $app['request'];
+        $response = new Response();
+        $oauthServer = $app['oauth_server'];
 
-        // pull the token from the request
-        $token = $app['request']->get('token');
+        if (!$oauthServer->verifyResourceRequest($request, $response, static::SCOPE)) {
+            return $response;
+        }
 
-        // make the resource request with the token in the request body
-        $config['resource_params']['access_token'] = $token;
+        $token = $oauthServer->getAccessTokenData($request);
+        $user = User::find($token['user_id']);
 
-        // determine the resource endpoint to call based on our config (do this somewhere else?)
-        $apiRoute = $config['timezones_route'];
-        $endpoint = 0 === strpos($apiRoute, 'http')
-            ? $apiRoute
-            : $app->url($apiRoute, $config['resource_params']);
+        $response
+            ->setData([
+                'data' => [
+                    'timezones' => array_map(function(Timezone $timezone) {
+                        return $timezone->name;
+                    }, $user->all('timezones')->toArray()),
+                ],
+            ]);
 
-        // make the resource request and decode the json response
-        $internalResponse = $http->get($endpoint, array_merge([
-            'query' => [
-                'token' => $token,
-            ],
-        ], $config['http_options']));
-
-        $json = json_decode((string) $internalResponse->getBody(), true);
-
-        return new Response($json, $internalResponse->getStatusCode());
+        return $response;
     }
 }
