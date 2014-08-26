@@ -9,9 +9,7 @@ class SignupController
 {
     public static function addRoutes($routing)
     {
-        $routing
-            ->post('/auth/signup', array(new self(), 'createUser'))
-            ->bind('createUser');
+        $routing->post('/auth/signup', array(new self(), 'createUser'));
     }
 
     public function createUser(\Silex\Application $app)

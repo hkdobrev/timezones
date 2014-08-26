@@ -13,9 +13,7 @@ class TimezonesController
 
     static public function addRoutes($routing)
     {
-        $routing
-            ->get('/timezones', array(new self(), 'getTimezones'))
-            ->bind('get_timezones');
+        $routing->get('/timezones', array(new self(), 'getTimezones'));
     }
 
     public function getTimezones(Application $app)

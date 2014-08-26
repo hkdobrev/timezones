@@ -9,13 +9,8 @@ class RequestTokenController
 {
     static public function addRoutes($routing)
     {
-        $routing
-            ->post('/login', array(new self(), 'requestTokenWithUserCredentials'))
-            ->bind('request_token_with_usercredentials');
-
-        $routing
-            ->get('/refresh_token', array(new self(), 'requestTokenWithRefreshToken'))
-            ->bind('request_token_with_refresh_token');
+        $routing->post('/login', array(new self(), 'requestTokenWithUserCredentials'));
+        $routing->get('/refresh_token', array(new self(), 'requestTokenWithRefreshToken'));
     }
 
     public function requestTokenWithUserCredentials(Application $app)
