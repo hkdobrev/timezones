@@ -10,11 +10,11 @@ class RequestTokenController
     static public function addRoutes($routing)
     {
         $routing
-            ->get('/login', array(new self(), 'requestTokenWithUserCredentials'))
+            ->post('/login', array(new self(), 'requestTokenWithUserCredentials'))
             ->bind('request_token_with_usercredentials');
 
         $routing
-            ->get('/client/request_token/refresh_token', array(new self(), 'requestTokenWithRefreshToken'))
+            ->get('/refresh_token', array(new self(), 'requestTokenWithRefreshToken'))
             ->bind('request_token_with_refresh_token');
     }
 
@@ -23,9 +23,11 @@ class RequestTokenController
         $config = $app['oauth'];    // the configuration for the current oauth implementation
         $http   = $app['http_client'];   // simple class used to make http requests
 
-        $username = $app['request']->get('username');
-        $password = $app['request']->get('password');
-        $scope = $app['request']->get('scope');
+        $payload = json_decode($app['request']->getContent());
+
+        $username = isset($payload->username) ? $payload->username : '';
+        $password = isset($payload->password) ? $payload->password : '';
+        $scope = isset($payload->scope) ? $payload->scope : '';
 
         // exchange user credentials for access token
         $query = array(

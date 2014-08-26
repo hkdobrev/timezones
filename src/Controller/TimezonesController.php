@@ -1,20 +1,20 @@
 <?php
 
-namespace Timezones\OAuth2\Client\Controller;
+namespace Timezones\Controller;
 
 use Silex\Application;
 use OAuth2\HttpFoundationBridge\Response;
 
-class RequestResourceController
+class TimezonesController
 {
     static public function addRoutes($routing)
     {
         $routing
-            ->get('/timezones', array(new self(), 'requestTimezones'))
-            ->bind('request_timezones');
+            ->get('/timezones', array(new self(), 'getTimezones'))
+            ->bind('get_timezones');
     }
 
-    public function requestTimezones(Application $app)
+    public function getTimezones(Application $app)
     {
         $config = $app['oauth'];    // the configuration for the current oauth implementation
         $http   = $app['http_client'];   // service to make HTTP requests to the oauth server

@@ -7,9 +7,11 @@ use Silex\ControllerProviderInterface;
 use OAuth2\HttpFoundationBridge\Response as BridgeResponse;
 use OAuth2\Server as OAuth2Server;
 use Timezones\OAuth2\Storage\Pdo;
+use Timezones\OAuth2\Storage\Memory;
 use OAuth2\GrantType\AuthorizationCode;
 use OAuth2\GrantType\UserCredentials;
 use OAuth2\GrantType\RefreshToken;
+use OAuth2;
 
 class OAuth2ServerControllerProvider implements ControllerProviderInterface
 {
@@ -18,20 +20,45 @@ class OAuth2ServerControllerProvider implements ControllerProviderInterface
      */
     public function setup(Application $app)
     {
-        // create PDO-based sqlite storage
-        $storage = new Pdo($app['db']);
-
-        // create array of supported grant types
-        $grantTypes = array(
-            'authorization_code' => new AuthorizationCode($storage),
-            'user_credentials'   => new UserCredentials($storage),
-            'refresh_token'   => new RefreshToken($storage, array(
-                'always_issue_new_refresh_token' => true,
-            )),
-        );
-
         // instantiate the oauth server
-        $server = new OAuth2Server($storage, array('enforce_state' => true, 'allow_implicit' => true), $grantTypes);
+        $server = new OAuth2Server([], [], [], [], new OAuth2\TokenType\Bearer([
+            'token_param_name' => 'token',
+        ]));
+        $server->setConfig('enforce_state', true);
+        $server->setConfig('allow_implicit', true);
+
+        // create PDO-based storage
+        $storage = new Pdo($app['db']);
+        $server->addStorage($storage);
+
+        $server->addGrantType(new UserCredentials($storage));
+        $server->addGrantType(new RefreshToken($storage, [
+            'always_issue_new_refresh_token' => true,
+        ]));
+
+        // public key strings can be passed in however you like
+        $publicKey  = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/../keys/jwt.pub');
+        $privateKey = file_get_contents($_SERVER['DOCUMENT_ROOT'].'/../keys/jwt');
+
+        // create key storage
+        $keyStorage = new OAuth2\Storage\Memory([
+            'keys' => array(
+                'public_key'  => $publicKey,
+                'private_key' => $privateKey,
+            ),
+            // add a Client ID for testing
+            'client_credentials' => [
+                'CLIENT_ID' => ['client_secret' => $app['oauth']['client_secret']]
+            ],
+        ]);
+
+        // make the "token" response type a CryptoToken
+        $server->addResponseType(new OAuth2\ResponseType\CryptoToken($keyStorage), 'token');
+
+        // Make the "access_token" storage use Crypto Tokens (JWTokens) instead of a database
+        $cryptoStorage = new OAuth2\Storage\CryptoToken($keyStorage);
+
+        $server->addStorage($cryptoStorage, 'access_token');
 
         // add the server to the silex "container" so we can use it in our controllers (see src/OAuth/Controller/.*)
         $app['oauth_server'] = $server;
