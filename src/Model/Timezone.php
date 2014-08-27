@@ -6,6 +6,9 @@ use Harp\Harp;
 use JsonSerializable;
 use Harp\Validate\Asserts;
 use Harp\Validate\Assert\Present;
+use Harp\Validate\Assert\GreaterThan;
+use Harp\Validate\Assert\LessThan;
+use Harp\Validate\Assert\Number;
 
 class Timezone extends Harp\AbstractModel implements JsonSerializable
 {
@@ -62,6 +65,9 @@ class Timezone extends Harp\AbstractModel implements JsonSerializable
             new Present('userId'),
             new Present('city'),
             new Present('utcOffset'),
+            new GreaterThan('utcOffset', -12.00001),
+            new LessThan('utcOffset', 12.00001),
+            new Number('utcOffset', Number::FLOAT),
         ]);
     }
 }
