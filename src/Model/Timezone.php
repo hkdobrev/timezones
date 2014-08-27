@@ -4,6 +4,8 @@ namespace Timezones\Model;
 
 use Harp\Harp;
 use JsonSerializable;
+use Harp\Validate\Asserts;
+use Harp\Validate\Assert\Present;
 
 class Timezone extends Harp\AbstractModel implements JsonSerializable
 {
@@ -50,5 +52,16 @@ class Timezone extends Harp\AbstractModel implements JsonSerializable
             'city' => $this->city,
             'utcOffset' => $this->utcOffset,
         ];
+    }
+
+    public function getValidationAsserts()
+    {
+        $timezone = $this;
+        return new Asserts([
+            new Present('name'),
+            new Present('userId'),
+            new Present('city'),
+            new Present('utcOffset'),
+        ]);
     }
 }

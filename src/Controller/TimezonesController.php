@@ -44,4 +44,26 @@ class TimezonesController
             ],
         ]);
     }
+
+    public function createTimezone(Application $app)
+    {
+        $user = $this->getCurrentUser($app);
+
+        $payload = json_decode($app['request']->getContent(), true);
+
+        $timezone = new Timezone(array_merge($payload, [
+            'userId' => $user->id,
+        ]));
+
+        if (!$timezone->validate()) {
+            return new Response([
+                'error' => 'Timezone could not be validated',
+                'message' => $timezone->getErrors()->humanize(),
+            ], 400);
+        }
+
+        Timezone::save($timezone);
+
+        return new Response($timezone, 201);
+    }
 }
