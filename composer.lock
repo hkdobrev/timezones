@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "871856cd198a105fdc01a385a4b6a082",
+    "hash": "f61892882afdcd886896664767a61797",
     "packages": [
         {
             "name": "bshaffer/oauth2-server-httpfoundation-bridge",
-            "version": "v1.0",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bshaffer/oauth2-server-httpfoundation-bridge.git",
-                "reference": "d84669c9fb3df6f33e607dad4b984087e1ec2528"
+                "reference": "13b81fcbdb29e691bf3b8335ecfdd6c959dcd97f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bshaffer/oauth2-server-httpfoundation-bridge/zipball/d84669c9fb3df6f33e607dad4b984087e1ec2528",
-                "reference": "d84669c9fb3df6f33e607dad4b984087e1ec2528",
+                "url": "https://api.github.com/repos/bshaffer/oauth2-server-httpfoundation-bridge/zipball/13b81fcbdb29e691bf3b8335ecfdd6c959dcd97f",
+                "reference": "13b81fcbdb29e691bf3b8335ecfdd6c959dcd97f",
                 "shasum": ""
             },
             "require": {
@@ -37,7 +37,7 @@
                 {
                     "name": "Brent Shaffer",
                     "email": "bshafs@gmail.com",
-                    "homepage": "http://github.com/bshaffer"
+                    "homepage": "http://brentertainment.com"
                 }
             ],
             "description": "A bridge to HttpFoundation for oauth2-server-php",
@@ -48,7 +48,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2013-09-06 19:06:02"
+            "time": "2014-08-21 22:32:17"
         },
         {
             "name": "bshaffer/oauth2-server-php",
@@ -1711,7 +1711,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "bshaffer/oauth2-server-httpfoundation-bridge": 20
+    },
     "prefer-stable": false,
     "platform": {
         "php": ">=5.5.0"

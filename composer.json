@@ -16,7 +16,7 @@
         "silex/web-profiler": "~1.0.3",
         "harp-orm/harp": "~0.3.2",
         "robmorgan/phinx": "~0.3.7",
-        "bshaffer/oauth2-server-httpfoundation-bridge": "~1.0",
+        "bshaffer/oauth2-server-httpfoundation-bridge": "dev-develop",
         "bshaffer/oauth2-server-php": "~1.4",
         "guzzlehttp/guzzle": "~4.2.1"
     },

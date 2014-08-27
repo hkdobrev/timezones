@@ -17,11 +17,11 @@ class TimezonesController
     {
         $routing
             ->get('/timezones', array(new self(), 'getTimezones'))
-            ->before('TimezonesController::before');
+            ->before('Timezones\Controller\TimezonesController::before');
 
         $routing
             ->post('/timezones', array(new self(), 'createTimezone'))
-            ->before('TimezonesController::before');
+            ->before('Timezones\Controller\TimezonesController::before');
     }
 
     public static function before(Request $request, Application $app)
