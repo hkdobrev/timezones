@@ -2,11 +2,12 @@
 
 namespace Timezones\Model;
 
+use JsonSerializable;
 use Harp\Harp;
 use Harp\Validate\Asserts;
 use Harp\Validate\Assert\Callback;
 
-class User extends Harp\AbstractModel
+class User extends Harp\AbstractModel implements JsonSerializable
 {
     public static function initialize($config)
     {
@@ -69,5 +70,15 @@ class User extends Harp\AbstractModel
                     ->count() === 0;
             }),
         ]);
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+        ];
     }
 }

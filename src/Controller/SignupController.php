@@ -16,27 +16,20 @@ class SignupController
     {
         $payload = json_decode($app['request']->getContent());
 
-        $user = new User();
-        $user->username = isset($payload->username) ? $payload->username : '';
-        $user->password = isset($payload->password) ? $payload->password : '';
+        $user = new User([
+            'username' => isset($payload->username) ? $payload->username : '',
+            'password' => isset($payload->password) ? $payload->password : '',
+        ]);
 
-        if ($user->validate()) {
-            User::save($user);
-
-            $response = [
-                'status' => 'OK',
-                'message' => sprintf(
-                    'User %s created successfully',
-                    $user->username
-                ),
-            ];
-        } else {
-            $response = [
+        if (!$user->validate()) {
+            return new Response([
                 'error' => 'User could not be validated',
                 'message' => $user->getErrors()->humanize(),
-            ];
+            ], 400);
         }
 
-        return new Response($response, $user->isEmptyErrors() ? 200 : 400);
+        User::save($user);
+
+        return new Response($user, 201);
     }
 }
