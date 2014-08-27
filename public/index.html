@@ -13,8 +13,10 @@
 </head>
 <body ng-controller="MainCtrl">
   <ul class="menu">
-    <li ng-if="isAuthenticated"><a href="" ng-click="logout()">Log out</a></li>
     <li ng-hide="isAuthenticated" ng-if="!isAuthenticated"><a href="/signup">Sign up</a></li>
+    <li ng-if="isAuthenticated"><a href="/">List of timezones</a></li>
+    <li ng-if="isAuthenticated"><a href="/create">Create a timezone</a></li>
+    <li ng-if="isAuthenticated"><a href="" ng-click="logout()">Log out</a></li>
   </ul>
 
   <div ng-view></div>
@@ -34,6 +36,7 @@
   <script src="js/controllers/LoginCtrl.js"></script>
   <script src="js/controllers/SignupCtrl.js"></script>
   <script src="js/controllers/TimezonesCtrl.js"></script>
+  <script src="js/controllers/NewTimezoneCtrl.js"></script>
   <script src="js/resources/timezone.js"></script>
 </body>
 </html>

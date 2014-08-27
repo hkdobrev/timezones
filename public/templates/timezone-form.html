@@ -1,0 +1,18 @@
+<section>
+    <h3>New timezone</h3>
+    <form ng-submit="submit()">
+        <p>
+            <label for="name">Name</label>
+            <input type="text" id="name" ng-model="timezone.name">
+        </p>
+        <p>
+            <label for="city">City</label>
+            <input type="text" id="city" ng-model="timezone.city">
+        </p>
+        <p>
+            <label for="utcOffset">UTC offset</label>
+            <input type="text" id="utcOffset" ng-model="timezone.utcOffset">
+        </p>
+        <button type="submit">Create</button>
+    </form>
+</section>
