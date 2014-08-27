@@ -15,14 +15,21 @@ class TimezonesController
 
     public static function addRoutes($routing, Application $app)
     {
-        $routing->before(function(Request $request) use ($app) {
-            $response = new Response();
-            if (!(new self())->verifyResourceRequest($app, $response, static::SCOPE)) {
-                return $response;
-            }
-        });
+        $routing
+            ->get('/timezones', array(new self(), 'getTimezones'))
+            ->before('TimezonesController::before');
 
-        $routing->get('/timezones', array(new self(), 'getTimezones'));
+        $routing
+            ->post('/timezones', array(new self(), 'createTimezone'))
+            ->before('TimezonesController::before');
+    }
+
+    public static function before(Request $request, Application $app)
+    {
+        $response = new Response();
+        if (!(new self())->verifyResourceRequest($app, $response, static::SCOPE)) {
+            return $response;
+        }
     }
 
     public function getTimezones(Application $app)
