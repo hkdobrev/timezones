@@ -67,8 +67,7 @@ class User extends Harp\AbstractModel implements JsonSerializable
                     ->where('username', $username)
                     ->whereNot('id', $user->id)
                     ->limit(1)
-                    ->load()
-                    ->count();
+                    ->loadCount();
             }),
             new Present('username'),
             new Present('password'),
