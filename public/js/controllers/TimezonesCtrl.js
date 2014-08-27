@@ -7,8 +7,5 @@ angular.module('timezones.controllers')
     'timezoneLocalTime',
     function($scope, Timezone, timezoneLocalTime) {
       $scope.timezones = Timezone.query();
-      $scope.localTime = function (offset) {
-        return timezoneLocalTime(offset).toISOString();
-      };
     }
   ]);

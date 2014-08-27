@@ -7,9 +7,11 @@ angular.module('timezones', [
   'ngRoute',
   'timezones.controllers',
   'timezones.services',
+  'timezones.filters',
   'Satellizer'
 ]);
 
 angular.module('timezones.controllers', ['timezones.resources']);
 angular.module('timezones.resources', ['ngResource']);
 angular.module('timezones.services', []);
+angular.module('timezones.filters', []);

@@ -1,19 +1,21 @@
 <section ng-controller="TimezonesCtrl">
-    <h3>timezones</h3>
+    <h3>Timezones</h3>
     <input type="text" ng-model="query">
     <button type="button" ng-click="query=''" ng-show="query">Clear</button>
     <ul>
-        <li ng-repeat="timezone in timezones | filter:query | orderBy:id">
-            ID: {{ timezone.id }}
-            <hr>
-            Name: {{ timezone.name }}
-            <hr>
-            City: {{ timezone.city }}
-            <hr>
-            UTC offset: {{ timezone.utcOffset }}
-            <hr>
-            Time: {{ localTime(timezone.utcOffset) }}
-            <hr>
+        <li ng-repeat="timezone in timezones | filter:query | orderBy:id" class="timezone-cell">
+            <p>
+                ID: {{ timezone.id }}
+            </p>
+            <p>
+                Name: {{ timezone.name }}
+            </p>
+            <p>
+                City: {{ timezone.city }}
+            </p>
+            <p>
+                Current time in {{ timezone.city }}: {{ timezone.utcOffset | offsetToTime }} (UTC <span ng-show="timezone.utcOffset >= 0">+</span>{{ timezone.utcOffset}})
+            </p>
         </li>
     </ul>
 </section>
