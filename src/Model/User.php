@@ -6,6 +6,7 @@ use JsonSerializable;
 use Harp\Harp;
 use Harp\Validate\Asserts;
 use Harp\Validate\Assert\Callback;
+use Harp\Validate\Assert\Present;
 
 class User extends Harp\AbstractModel implements JsonSerializable
 {
@@ -62,13 +63,15 @@ class User extends Harp\AbstractModel implements JsonSerializable
         $user = $this;
         return new Asserts([
             new Callback('username', function($username) use ($user) {
-                return User::findAll()
+                return 0 === User::findAll()
                     ->where('username', $username)
                     ->whereNot('id', $user->id)
                     ->limit(1)
                     ->load()
-                    ->count() === 0;
+                    ->count();
             }),
+            new Present('username'),
+            new Present('password'),
         ]);
     }
 
