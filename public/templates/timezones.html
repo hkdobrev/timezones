@@ -1,4 +1,13 @@
 <section ng-controller="TimezonesCtrl">
     <h3>timezones</h3>
-    {{ a }}
+    <ul>
+        <li ng-repeat="timezone in timezones">
+            Name: {{ timezone.name }}
+            <hr>
+            City: {{ timezone.city }}
+            <hr>
+            UTC offset: {{ timezone.utcOffset }}
+            <hr>
+        </li>
+    </ul>
 </section>
