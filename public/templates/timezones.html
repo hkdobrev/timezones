@@ -1,6 +1,7 @@
 <section ng-controller="TimezonesCtrl">
     <h3>timezones</h3>
     <input type="text" ng-model="query">
+    <button type="button" ng-click="query=''" ng-show="query">Clear</button>
     <ul>
         <li ng-repeat="timezone in timezones | filter:query | orderBy:id">
             ID: {{ timezone.id }}
