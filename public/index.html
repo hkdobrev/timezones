@@ -14,7 +14,7 @@
 <body ng-controller="MainCtrl">
   <ul class="menu">
     <li ng-if="isAuthenticated"><a href="" ng-click="logout()">Log out</a></li>
-    <li ng-if="!isAuthenticated"><a href="/signup">Sign up</a></li>
+    <li ng-hide="isAuthenticated" ng-if="!isAuthenticated"><a href="/signup">Sign up</a></li>
   </ul>
 
   <div ng-view></div>
@@ -24,6 +24,7 @@
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
   <script src="bower_components/satellizer/satellizer.js"></script>
   <script src="js/app.js"></script>
   <script src="js/config/location.js"></script>
@@ -32,5 +33,7 @@
   <script src="js/controllers/MainCtrl.js"></script>
   <script src="js/controllers/LoginCtrl.js"></script>
   <script src="js/controllers/SignupCtrl.js"></script>
+  <script src="js/controllers/TimezonesCtrl.js"></script>
+  <script src="js/resources/timezone.js"></script>
 </body>
 </html>

@@ -28,3 +28,6 @@
   content: "";
   padding: 0;
 }
+[ng-hide] {
+  display: none
+}

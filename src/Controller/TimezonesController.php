@@ -36,13 +36,11 @@ class TimezonesController
     {
         $user = $this->getCurrentUser($app);
 
-        return new Response([
-            'data' => [
-                'timezones' => array_map(function(Timezone $timezone) {
-                    return $timezone->jsonSerialize();
-                }, $user->all('timezones')->toArray()),
-            ],
-        ]);
+        return new Response(
+            array_map(function(Timezone $timezone) {
+                return $timezone->jsonSerialize();
+            }, $user->all('timezones')->toArray())
+        );
     }
 
     public function createTimezone(Application $app)
