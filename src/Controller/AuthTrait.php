@@ -8,15 +8,14 @@ use OAuth2\HttpFoundationBridge\Response;
 
 trait AuthTrait
 {
-
     protected $currentUser;
 
-    public function verifyResourceRequest(Application $app, Response $response)
+    public function verifyResourceRequest(Application $app, Response $response, $scope = null)
     {
         $request = $app['request'];
 
         return $app['oauth_server']
-            ->verifyResourceRequest($app['request'], $response, static::SCOPE);
+            ->verifyResourceRequest($app['request'], $response, $scope);
     }
 
     public function getCurrentUser(Application $app)

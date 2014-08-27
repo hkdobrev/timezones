@@ -3,9 +3,9 @@
 namespace Timezones\Controller;
 
 use Silex\Application;
-use OAuth2\HttpFoundationBridge\Response;
-use Timezones\Model\User;
 use Timezones\Model\Timezone;
+use OAuth2\HttpFoundationBridge\Response;
+use OAuth2\HttpFoundationBridge\Request;
 
 class TimezonesController
 {
@@ -13,30 +13,28 @@ class TimezonesController
 
     const SCOPE = 'timezones';
 
-    static public function addRoutes($routing)
+    public static function addRoutes($routing, Application $app)
     {
+        $routing->before(function(Request $request) use ($app) {
+            $response = new Response();
+            if (!(new self())->verifyResourceRequest($app, $response, static::SCOPE)) {
+                return $response;
+            }
+        });
+
         $routing->get('/timezones', array(new self(), 'getTimezones'));
     }
 
     public function getTimezones(Application $app)
     {
-        $response = new Response();
-
-        if (!$this->verifyResourceRequest($app, $response)) {
-            return $response;
-        }
-
         $user = $this->getCurrentUser($app);
 
-        $response
-            ->setData([
-                'data' => [
-                    'timezones' => array_map(function(Timezone $timezone) {
-                        return $timezone->jsonSerialize();
-                    }, $user->all('timezones')->toArray()),
-                ],
-            ]);
-
-        return $response;
+        return new Response([
+            'data' => [
+                'timezones' => array_map(function(Timezone $timezone) {
+                    return $timezone->jsonSerialize();
+                }, $user->all('timezones')->toArray()),
+            ],
+        ]);
     }
 }

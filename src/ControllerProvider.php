@@ -2,7 +2,6 @@
 
 namespace Timezones;
 
-use Silex\Application;
 use Silex\ControllerProviderInterface;
 use Silex\Provider\SessionServiceProvider;
 use GuzzleHttp\Client as GuzzleClient;
@@ -12,7 +11,7 @@ class ControllerProvider implements ControllerProviderInterface
     /**
      * Connect the controller classes to the routes
      */
-    public function connect(Application $app)
+    public function connect(\Silex\Application $app)
     {
         // create session object and start it
         $app->register(new SessionServiceProvider());
@@ -27,7 +26,7 @@ class ControllerProvider implements ControllerProviderInterface
         // Load routes from the controller classes
         $routing = $app['controllers_factory'];
 
-        Controller\TimezonesController::addRoutes($routing);
+        Controller\TimezonesController::addRoutes($routing, $app);
         Controller\SignupController::addRoutes($routing);
 
         return $routing;
