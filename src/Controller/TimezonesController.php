@@ -36,10 +36,20 @@ class TimezonesController
     {
         $user = $this->getCurrentUser($app);
 
+        $query = $app['request']->query('q');
+
+        $timezones = $user->all('timezones');
+
+        if ($query) {
+            $timezones = $timezones->filter(function($timezone) use ($query) {
+                return mb_strpos($timezone->name, $query) !== false;
+            });
+        }
+
         return new Response(
             array_map(function(Timezone $timezone) {
                 return $timezone->jsonSerialize();
-            }, $user->all('timezones')->toArray())
+            }, $timezones->toArray())
         );
     }
 
