@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
 if [ $# -eq 0 ]; then
-    echo "usage: provision.sh <project-name>"
+    >&2 echo "usage: provision.sh <project-name>"
     exit 1
 fi
 
 PROJECT_NAME=$1
+SCRIPTPATH=/vagrant/provision
 
-# Copy /etc configuration
-sudo cp -r /vagrant/vagrant-provision/etc/* /etc/
+echo "Copying $SCRIPTPATH/etc to /etc..."
+sudo cp -r $SCRIPTPATH/etc/* /etc/
 
-# Configure en_US.UTF-8 locale
-sudo locale-gen
+echo "Configuring en_US.UTF-8 locale..."
+sudo locale-gen --purge en_US.UTF-8.1 >/dev/null
 
 # Update apt get repositories
 sudo apt-get install python-software-properties
@@ -33,7 +34,7 @@ eval "sudo a2ensite ${PROJECT_NAME}.conf"
 sudo service apache2 reload
 
 # Remove password for MySQL root user
-mysqladmin --user=root --password=root password ''
+mysqladmin --user=root --password=root password '' >/dev/null 2>&1
 
 # Create MySQL databases
 eval "mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS ${PROJECT_NAME}
@@ -43,6 +44,11 @@ eval "mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS ${PROJECT_NAME}
 eval "mysql -uroot -e 'CREATE DATABASE IF NOT EXISTS ${PROJECT_NAME}_test
     DEFAULT CHARACTER SET utf8
     DEFAULT COLLATE utf8_general_ci';"
+
+echo "Creating Vagrant MySQL user with all priveleges..."
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'vagrant'@'%' IDENTIFIED BY '';"
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'vagrant'@'localhost' IDENTIFIED BY '';"
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'vagrant'@'127.0.0.1' IDENTIFIED BY '';"
 
 # Set environment variables
 source /etc/environment
@@ -54,10 +60,7 @@ export PATH=$PATH:/home/vagrant/bin
 # Hush login message
 touch $HOME/.hushlogin
 
-# install composer
+echo "Install Composer..."
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/home/vagrant/bin --filename=composer
+composer --version
 composer --working-dir=/vagrant install
-
-# Make sure /tmp is writable
-sudo chown -R vagrant:www-data /tmp
-sudo chmod -R 777 /tmp
