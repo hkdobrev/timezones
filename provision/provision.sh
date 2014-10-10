@@ -25,9 +25,14 @@ sudo debconf-set-selections <<< 'mysql-server-5.1 mysql-server/root_password_aga
 
 # Install Git, Apache, MySQL, PHP, htop and Vim
 sudo apt-get -q -y install \
-	git-core htop vim apache2 mysql-server mysql-client \
-	php5 php5-imagick php5-gd php5-memcache php5-curl php5-intl \
-	php5-mysqlnd php5-sqlite php5-xdebug php5-mcrypt
+	git-core htop vim \
+    apache2 \
+    mysql-server mysql-client \
+	php5 php5-curl php5-intl php5-mcrypt \
+    php5-imagick php5-gd \
+    php5-memcache php5-apcu \
+	php5-mysqlnd php5-sqlite \
+    php5-xdebug
 
 # Enable project virtual host
 eval "sudo a2ensite ${PROJECT_NAME}.conf"
@@ -64,3 +69,6 @@ echo "Install Composer..."
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/home/vagrant/bin --filename=composer
 composer --version
 composer --working-dir=/vagrant install
+
+echo "Cleanup apt-get..."
+sudo apt-get autoremove
