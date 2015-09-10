@@ -1,6 +1,6 @@
 # Timezone project
 
-Created from [Haralan Dobrev][hkdobrev.com] for [Toptal][] screening process.
+Created from [Haralan Dobrev][hkdobrev.com] for demo and learning purposes.
 
 ## Project task
 
